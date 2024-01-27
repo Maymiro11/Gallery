@@ -1,0 +1,29 @@
+{
+  "name": "individual-lessons",
+  "version": "1.0.0",
+  "description": "03.06",
+  "scripts": {
+    "start": "npx parcel src/index.html",
+    "push": "git add . ; git commit -m '123'; git push;"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GoITteacher/Individual-lessons.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GoITteacher/Individual-lessons/issues"
+  },
+  "homepage": "https://github.com/GoITteacher/Individual-lessons#readme",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.6.0",
+    "parcel": "^2.9.3",
+    "parcel-reporter-clean-dist": "^1.0.4",
+    "posthtml-include": "^1.7.4"
+  },
+  "dependencies": {
+    "simple-notify": "^0.5.5"
+  }
+}
