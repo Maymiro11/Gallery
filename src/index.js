@@ -1,5 +1,14 @@
+import Notify from 'simple-notify'
+import 'simple-notify/dist/simple-notify.min.css'
+import { v4  } from 'uuid';
+
+console.log(v4());
+
+
 const form = document.querySelector('.js-form');
 const box = document.querySelector('.js-list')
+
+let gallery = [];
 
 form.addEventListener('submit', onFormSubmit);
 
@@ -9,29 +18,37 @@ function onFormSubmit(e) {
     let img2 = form.elements.img2.value;
 
     if ( img1 === '' || img2 === '') {
-        pushNotify() ;
-        return;
-    }
-addCard(img1);
-form.elements.img1.value = '';
+      pushNotify() ;
+      return;
+  }
+
+    const image = {
+      img1: img1,
+      img2: img2,
+      id: v4()
+     };
+    gallery.push(image);
+    localStorage.setItem('img', JSON.stringify(gallery));
+
+  
+addCard(image);
+form.reset();
 } 
 
-function renderCard(img1) {
-    return `<li class="box item">
+function renderCard(img) {
+    return `<li class="box item" data-id="${img.id}">
     <img
-      src="${img1}"
+      src="${img.img1}"
       alt=""
+      
     />
     <button class="form-control" data-type="delete">DELETE</button>
   </li>`
 }
 
-function addCard (img1){
-box.insertAdjacentHTML('afterbegin', renderCard(img1));
+function addCard (img){
+box.insertAdjacentHTML('afterbegin', renderCard(img));
 }
-
-import Notify from 'simple-notify'
-import 'simple-notify/dist/simple-notify.min.css'
 
 function pushNotify() {
     new Notify({
@@ -51,4 +68,32 @@ function pushNotify() {
       type: 1,
       position: 'center top'
     })
+  }
+  
+
+  function init() {
+    
+    const json = localStorage.getItem('img');
+    const parseJson = JSON.parse(json) || [];
+    gallery.push(...parseJson);
+    gallery.forEach(addCard);
+    
+  }
+  init();
+
+  box.addEventListener('click', onImageListDelete);
+
+  function onImageListDelete(e) {
+   
+    if (e.target.nodeName !== 'BUTTON' ) {
+
+      return;
+    }
+    const liElem = e.target.parentNode;
+    console.log(liElem.dataset.id);
+    
+    const dataId = liElem.dataset.id;
+    gallery = gallery.filter((elem) => elem.id !== dataId);
+    localStorage.setItem('img', JSON.stringify(gallery));
+    liElem.remove();
   }

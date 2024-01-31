@@ -24,6 +24,7 @@
     "posthtml-include": "^1.7.4"
   },
   "dependencies": {
-    "simple-notify": "^0.5.5"
+    "simple-notify": "^0.5.5",
+    "uuid": "^9.0.1"
   }
 }
